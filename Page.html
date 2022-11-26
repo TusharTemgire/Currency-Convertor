@@ -1,0 +1,113 @@
+<!doctype html>
+<HTML>
+    <style>
+body{
+    border-style: double; border-radius: 10px; color: rgba(0, 0, 0, 0.8); width: 40%;
+    text-align: center;
+    background-color: rgb(245, 245, 247);
+font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;}
+
+h1{
+color: rgb(61, 68, 195);
+    text-align: center;
+font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;}
+p{
+font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+
+}
+button{
+    height: 30px;
+    width: auto;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 102, 204);
+    border-radius: 20px;
+    text-align: center;
+    font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+header{
+    border-radius: 8px;
+    width: 100%;
+    height: 45px;
+background-color: rgba(0, 0, 0, 0.8);
+
+}
+img{
+    border-radius: 27%;
+    padding-top: 0.13%;
+    height: 40px;
+    width: auto;
+}
+input{
+    font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: white;
+    background-color: #3c4858;
+    height: 18px;
+    border-radius: 1ch;
+}
+select{
+    font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+    color: white;
+    border-radius: 5px;
+    background-color: #3c4858;
+}
+header{
+    background-color: rgba(0, 0, 0, 0.8);
+}
+    </style>
+<head>
+   <title>Currency Converter</title>
+</head>
+<body>
+    <header>
+        <img src="https://w7.pngwing.com/pngs/324/279/png-transparent-exchange-rate-currency-symbol-foreign-exchange-market-dollar-sign-bank-blue-text-trademark.png" alt="">
+    </header>
+    
+   <h1>Currency Converter2.0</h1>
+   <p> Select Currency and enter Amount to convert.</p>
+   <form>
+      <label>From:</label>
+      <select id="from">
+         <option value="USD">USD</option>
+         <option value="EUR">EUR</option>
+         <option value="GBP">GBP</option>
+         <option value="INR">INR</option>
+      </select>
+      <label>To:</label>
+      <select id="to">
+         <option value="USD">USD</option>
+         <option value="EUR">EUR</option>
+         <option value="GBP">GBP</option>
+         <option value="INR">INR</option>
+      </select>
+      <label>Amount:</label>
+      <input type="text" id="amount" />
+      <button type="button" id="convert">Convert</button>
+      <p id="result"></p>
+   </form>
+   <script>
+      const convert = document.getElementById("convert");
+      const result = document.getElementById("result");
+      const from = document.getElementById("from");
+      const to = document.getElementById("to");
+      const amount = document.getElementById("amount");
+      convert.addEventListener("click", function() {
+         let fromCurrency = from.value;
+         let toCurrency = to.value;
+         let amt = amount.value;
+         fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`)
+         .then(response => {
+               return response.json();
+         })
+         .then(data => {
+            let rate = data.rates[toCurrency];
+            let total = rate * amt;
+            result.innerHTML = `${amt} ${fromCurrency} = ${total}
+            ${toCurrency}`;
+         });
+      });
+   </script>
+   <header>
+    </header>
+</body>
+</html>
